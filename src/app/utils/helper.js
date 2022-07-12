@@ -25,8 +25,8 @@ export const calculateAllTime = (toggles) => {
 }
 
 const calculateLapTime = (toggles, laps, index) => {
-    let calulateTime = 0
     const togglesLength = toggles.length;
+    let calulateTime = 0
 
     if (togglesLength < 2) {
         if (toggles[0] < laps[index]) {

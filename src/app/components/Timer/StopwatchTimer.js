@@ -16,8 +16,8 @@ const StopwatchTimer = ({ stopwatch, getCurrentTimer }) => {
     const [isTimerActive, setIsTimerActive] = useState(false);
     const [time, setTime] = useState(0);
 
-    const { __id: id, toggles, laps } = stopwatch.stopwatch.result;
-    const { error, isFetching, isFetchingToggle, isFetchingLap } = stopwatch;
+    const { stopwatch: stopwatchDetails, error, isFetching, isFetchingToggle, isFetchingLap } = stopwatch;
+    const { __id: id, toggles, laps } = stopwatchDetails.result;
     const togglesLength = toggles.length;
 
     useMemo(() => {
@@ -76,42 +76,39 @@ const StopwatchTimer = ({ stopwatch, getCurrentTimer }) => {
     )}, [isFetchingLap, laps, toggles]);
 
     return (
-        <>
-            {error && !isFetching 
-                ? (
-                    <Error>
-                        <h2>
-                            {error}
-                        </h2>
-                    </Error>
-                ) : (
-            isFetching
-                ? <Spinner />
-                : (
-                    <>
-                        <StopwatchTimeTopPanel 
-                            backToStopwatchesList={backToStopwatchesList}
-                            handleDeleteStopwatch={handleDeleteStopwatch}
-                            id={id} 
-                        />
-                        <Timer>{convertMilliseconds(time)}</Timer>
-                        <ButtonBoard>
-                            <Button text="Lap" onClick={handleAddLap} />
-                            <Button text="Reset" onClick={handleResetStopwatch} />
-                            {isFetchingToggle
-                                ? <Spinner />
-                                : (isTimerActive 
-                                    ? <Button warning text="Stop" onClick={handleStartStop} />
-                                    : <Button green text="Start" onClick={handleStartStop} />
-                                )
-                            }                
-                        </ButtonBoard>
-                        {stopwatchLapsComponent}
-                    </>
-                )
-            )}
-          
-        </>
+        error && !isFetching 
+            ? (
+                <Error>
+                    <h2>
+                        {error}
+                    </h2>
+                </Error>
+            ) : (
+        isFetching
+            ? <Spinner />
+            : (
+                <>
+                    <StopwatchTimeTopPanel
+                        backToStopwatchesList={backToStopwatchesList}
+                        handleDeleteStopwatch={handleDeleteStopwatch}
+                        id={id}
+                    />
+                    <Timer>{convertMilliseconds(time)}</Timer>
+                    <ButtonBoard>
+                        <Button text="Lap" onClick={handleAddLap} />
+                        <Button text="Reset" onClick={handleResetStopwatch} />
+                        {isFetchingToggle
+                            ? <Spinner />
+                            : (isTimerActive
+                                ? <Button warning text="Stop" onClick={handleStartStop} />
+                                : <Button green text="Start" onClick={handleStartStop} />
+                            )
+                        }
+                    </ButtonBoard>
+                    {stopwatchLapsComponent}
+                </>
+            )
+        )
     );
 };
 

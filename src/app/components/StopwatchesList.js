@@ -22,25 +22,23 @@ const StopwatchesList = () => {
     const { stopwatches, isFetching, error } = stopwatchesList;
 
     return (
-        <>
-            {error && !isFetching 
-                ? (
-                    <Error>
-                        <h2>
-                            {error}
-                        </h2>
-                    </Error>
-                ) : (
-            isFetching
-                ? (
-                    <Spinner />
-                ) : (stopwatches.result.map((stopwatches) => (
-                        <StopwatchesListStyled key={stopwatches.__id}>
-                            <Stopwatch stopwatches={stopwatches} />
-                        </StopwatchesListStyled>
-                )))               
-            )}
-        </>
+        error && !isFetching 
+            ? (
+                <Error>
+                    <h2>
+                        {error}
+                    </h2>
+                </Error>
+            ) : (
+        isFetching
+            ? (
+                <Spinner />
+            ) : (stopwatches.result.map((stopwatches) => (
+                    <StopwatchesListStyled key={stopwatches.__id}>
+                        <Stopwatch stopwatches={stopwatches} />
+                    </StopwatchesListStyled>
+            )))
+        )
     );
 };
 

@@ -4,24 +4,24 @@ import { LapsListStyled, LapMaxValue, LapMinValue } from './StopwatchLaps.styled
 import { convertMilliseconds, calculateLap } from '../../utils/helper';
 
 const StopwatchLaps = ({ isFetchingLap, laps, toggles }) => {
-    const calculateLapTime = laps.map((_lap, index) => (calculateLap(toggles, laps, index)));
-    let calculateLapTimeMax = 0
-    let calculateLapTimeMin = 0
+    const lapsTimeArray = laps.map((_lap, index) => (calculateLap(toggles, laps, index)));
+    let lapTimeMax = 0
+    let lapTimeMin = 0
     if (laps.length >= 3) {
-        calculateLapTimeMax = Math.max(...calculateLapTime)
-        calculateLapTimeMin = Math.min(...calculateLapTime)        
+        lapTimeMax = Math.max(...lapsTimeArray)
+        lapTimeMin = Math.min(...lapsTimeArray)        
     }
 
     return (
         isFetchingLap
             ? <Spinner />
-            : (calculateLapTime.map((lap, index) => (
+            : (lapsTimeArray.map((lap, index) => (
                 <LapsListStyled key={lap}>
                     <h2>Lap {index + 1}</h2>
                     <h2>
-                        {lap !== calculateLapTimeMax && lap !== calculateLapTimeMin && convertMilliseconds(lap)}
-                        {lap === calculateLapTimeMax && <LapMaxValue>{convertMilliseconds(lap)}</LapMaxValue>}
-                        {lap === calculateLapTimeMin && <LapMinValue>{convertMilliseconds(lap)}</LapMinValue>}
+                        {lap !== lapTimeMax && lap !== lapTimeMin && convertMilliseconds(lap)}
+                        {lap === lapTimeMax && <LapMaxValue>{convertMilliseconds(lap)}</LapMaxValue>}
+                        {lap === lapTimeMin && <LapMinValue>{convertMilliseconds(lap)}</LapMinValue>}
                     </h2>
                 </LapsListStyled>
             )
